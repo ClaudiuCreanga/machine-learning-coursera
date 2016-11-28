@@ -6,7 +6,7 @@ function [theta, J_history] = gradientDescent(X, y, theta, alpha, num_iters)
 % Initialize some useful values
 m = length(y); % number of training examples
 J_history = zeros(num_iters, 1);
-
+theta = (pinv(X'*X))*X'*y
 for iter = 1:num_iters
 
     % ====================== YOUR CODE HERE ======================
@@ -16,7 +16,20 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCost) and gradient here.
     %
-
+    %theta = theta - alpha * (1 / m) * sum(computeCost(X, y, theta)*X(iter))
+    %delta = (1/m)*(X'.-y)
+    
+    % delat is only 1 feature
+    %h = X * theta; % 
+    %delta = (1/m)*sum(h - y).*X
+    %delta = (1/m)*sum(X.*repmat((X*theta - y), 1, size(X,2)));
+    
+    
+%theta = (theta' - (alpha * delta))';
+%theta = (pinv(X'*X))*X'*y
+ gradJ = X'* (X*theta - y) / m;
+theta = theta - (alpha/m)*X'*(X*theta - y);
+    %fprintf(delta)
 
 
 
@@ -27,7 +40,5 @@ for iter = 1:num_iters
 
     % Save the cost J in every iteration    
     J_history(iter) = computeCost(X, y, theta);
-
-end
 
 end
