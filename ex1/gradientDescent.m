@@ -16,18 +16,16 @@ for iter = 1:num_iters
     % Hint: While debugging, it can be useful to print out the values
     %       of the cost function (computeCost) and gradient here.
     %
-    %theta = theta - alpha * (1 / m) * sum(computeCost(X, y, theta)*X(iter))
-    %delta = (1/m)*(X'.-y)
+
+    X_1 = X(:,1);
+    %select the second column of the X
+    X_2 = X(:,2);
+    %output of hypothesis
+    hypothesis = X * theta;
+    %using the gradient method to update theta
+    theta(1) = theta(1) - alpha * sum((hypothesis - y)' *  X_1) / m;
+    theta(2) = theta(2) - alpha * sum((hypothesis - y)' *  X_2) / m;
     
-    % delat is only 1 feature
-    %h = X * theta; % 
-    %delta = (1/m)*sum(h - y).*X
-    %delta = (1/m)*sum(X.*repmat((X*theta - y), 1, size(X,2)));
-    
-    
-%theta = (theta' - (alpha * delta))';
-%theta = (pinv(X'*X))*X'*y
- gradJ = X'* (X*theta - y) / m;
 theta = theta - (alpha/m)*X'*(X*theta - y);
     %fprintf(delta)
 
